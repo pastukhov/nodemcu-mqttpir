@@ -1,7 +1,7 @@
 # nodemcu-mqttpir
 
 An app for esp8266 mcu with <a href="https://github.com/nodemcu/nodemcu-firmware">nodemcu firmware</a>
-It send temperature/humidity from DHT22 sensor and alerts from PIR motion sensor like <a href"http://ru.aliexpress.com/item/10pcs-HC-SR501-Adjust-IR-Pyroelectric-Infrared-PIR-Motion-Sensor-Detector-Module/1297982338.html">this</a>
+It send temperature/humidity from DHT22 sensor and alerts from PIR motion sensor like <a href="http://ru.aliexpress.com/item/10pcs-HC-SR501-Adjust-IR-Pyroelectric-Infrared-PIR-Motion-Sensor-Detector-Module/1297982338.html">this</a>
 Keep in mind that tis sensor use 3.3v logic level,  but should be powered from 5v.
 
 ##To get it working you should:
