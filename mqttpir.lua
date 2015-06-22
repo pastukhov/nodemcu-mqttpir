@@ -1,28 +1,30 @@
 pir = 1
 dht22 = 2
-chipid = node.chipid()
+mqttHost = '192.168.100.122'
+
+chipId = node.chipid()
 gpio.mode(pir,gpio.INT)
 
-m = mqtt.Client(chipid, 5)
+
+m = mqtt.Client(chipId, 5)
 
 
 
 local function connect()
 
-m:connect("192.168.100.122", 1883, 0, function(conn)
-    m:publish("events/esp8266/".. chipid .."/status", 
-    cjson.encode({Type = "Status", SensorID = chipid, Status = 1,Heap = node.heap()}), 0, 0)          
-    if DEBUG then 
-       print("connected") 
-    end
+    m:connect(mqttHost, 1883, 0, function(conn)
+	m:publish("events/esp8266/".. chipId .."/status", 
+	cjson.encode({type = "status", sensorId = chipId, status = 1,heap = node.heap()}), 0, 0)          
+	if DEBUG then 
+    	    print("connected") 
+	end
      end)
 
 end
 
 
-
-m:lwt("events/esp8266/".. chipid .."/status", 
-cjson.encode({Type = "Status", SensorID = chipid, Status = 0}), 0, 0)
+m:lwt("events/esp8266/".. chipId .."/status", 
+cjson.encode({type = "status", sensorId = chipId, status = 0}), 0, 0)
 
 connect() 
 
@@ -37,8 +39,8 @@ end)
 
 
 gpio.trig(pir,"both", function (level)
-        m:publish("events/esp8266/".. chipid .. "/pir" ,
-            cjson.encode({Type = "PIR", SensorID = chipid, Status = level,Heap = node.heap()}) ,0,0 )        
+        m:publish("events/esp8266/".. chipId .. "/pir" ,
+            cjson.encode({type = "PIR", sensorId = chipId, status = level,heap = node.heap()}) ,0,0 )        
         if DEBUG then 
             print(level)
         end
@@ -53,14 +55,14 @@ tmr.alarm(2, 10000, 1, function ()
         humi = tostring(humi) ..'.'.. tostring(humi_decimial):gsub('0+$','')
 
         if DEBUG then 
-            print("Temperature: "..temp.." deg C")
-            print("Humidity: "..humi.." %")
+            print("temperature: "..temp.." deg C")
+            print("humidity: "..humi.." %")
             print("Sendind temperature and humidity")
         end
-        m:publish("events/esp8266/".. chipid .."/temperature",
-            cjson.encode({Type = "Temperature", SensorID = chipid, Temperature = temp, Heap = node.heap()})  ,0,0) 
-        m:publish("events/esp8266/".. chipid .."/humidity",
-            cjson.encode({Type = "Humidity", SensorID = chipid, Humidity = humi ,Heap = node.heap()})  ,0,0)
+        m:publish("events/esp8266/".. chipId .."/temperature",
+            cjson.encode({type = "temperature", sensorId = chipId, temperature = temp, heap = node.heap()})  ,0,0) 
+        m:publish("events/esp8266/".. chipId .."/humidity",
+            cjson.encode({type = "humidity", sensorId = chipId, humidity = humi ,heap = node.heap()})  ,0,0)
       end
 
 end)

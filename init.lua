@@ -48,7 +48,7 @@ local compileAndRemoveIfNeeded = function(f)
    end
 end
 
-local serverFiles = {'mqttpir.lua', 'yet-another-dht22.lua'}
+local serverFiles = {'mqttpir.lua'}
 for i, f in ipairs(serverFiles) do compileAndRemoveIfNeeded(f) end
 
 compileAndRemoveIfNeeded = nil
