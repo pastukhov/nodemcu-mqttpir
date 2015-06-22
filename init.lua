@@ -39,13 +39,13 @@ collectgarbage()
 -- This only happens the first time afer the .lua files are uploaded.
 
 local compileAndRemoveIfNeeded = function(f)
-   if file.open(f) then
-      file.close()
-      print('Compiling:', f)
-      node.compile(f)
-      file.remove(f)
-      collectgarbage()
-   end
+  if file.open(f) then
+    file.close()
+    print('Compiling:', f)
+    node.compile(f)
+    file.remove(f)
+    collectgarbage()
+  end
 end
 
 local serverFiles = {'mqttpir.lua'}
@@ -61,22 +61,22 @@ collectgarbage()
 local joinCounter = 0
 local joinMaxAttempts = 5
 tmr.alarm(0, 3000, 1, function()
-   if wifi.sta.getip() == nil and joinCounter < joinMaxAttempts then
-      print('Connecting to WiFi Access Point ...')
-      joinCounter = joinCounter +1
-   else
-      if joinCounter == joinMaxAttempts then
-         print('Faild to connect to WiFi Access Point.')
-      else
-         print('IP: ',wifi.sta.getip())
-         -- Uncomment to automatically start the server in port 80
-         dofile("mqttpir.lc")
-      end
-      tmr.stop(0)
-      joinCounter = nil
-      joinMaxAttempts = nil
-      collectgarbage()
-   end
+  if wifi.sta.getip() == nil and joinCounter < joinMaxAttempts then
+    print('Connecting to WiFi Access Point ...')
+    joinCounter = joinCounter +1
+  else
+    if joinCounter == joinMaxAttempts then
+      print('Faild to connect to WiFi Access Point.')
+    else
+      print('IP: ',wifi.sta.getip())
+      -- Uncomment to automatically start the server in port 80
+      dofile("mqttpir.lc")
+    end
+    tmr.stop(0)
+    joinCounter = nil
+    joinMaxAttempts = nil
+    collectgarbage()
+  end
 
 end)
 
